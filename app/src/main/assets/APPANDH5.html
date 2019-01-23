@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+
+		<title>CCTV5_APP原生与H5交互示例</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+		<meta http-equiv="description" content="This is my page">
+		<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+		<script type="text/javascript">
+			/**
+			这只是个例子，可根据具体需求自行处理
+			1、回调的函数，方法名自定义
+			2、不支持namespace，如果有，请自行封装
+			3、可以不用eval直接获取信息
+			*/
+			var isAndroid
+			var isIos
+			function JudgeDevices() {
+			    var u = navigator.userAgent;
+			    isAndroid = u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //安卓端
+			    isIos = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //IOS端
+			}
+				
+		
+			function getUser(data){
+				alert(data);
+				if (data == undefined || data == null)
+				{
+					alert('未登录');
+					return;
+				}
+				
+		        document.getElementById("returnValue").value = data;
+				alert(data.userId);
+				alert(data.consigneeInfo);
+				alert(data.consigneeInfo.consignee);
+				alert(data.unionid);
+				/*
+				此处可以写成全局变量，拿到用户信息时赋值，button调用window.jsext.goAddress
+				*/
+				var addressParams = '{"userId":"'+data.userId+'"}';
+				window.jsext.goAddress(addressParams);
+			}
+
+			function startVolumeListener(data){
+				alert(data);
+				var jsonObj = eval(data);
+				alert(jsonObj.voiceValue);
+				document.getElementById("returnValue").value = "voiceValue: "+jsonObj.voiceValue;
+			}
+
+			function stopVolumeListener(data){
+				alert(data);
+				var jsonObj = eval(data);
+				alert(jsonObj.voiceValue);
+				document.getElementById("returnValue").value = "voiceValue: "+jsonObj.voiceValue;
+			}
+
+			function test(data){
+				alert(data);
+			}
+
+			function getEncryptionKey (data){
+			    var jsonObj = eval(data);
+			    document.getElementById("returnValue").value = "api_sign:"+jsonObj.api_sign+" sign_time"+jsonObj.sign_time;
+			}
+
+
+
+
+			var userParams = '{"funcKey":"getUser"}';
+			var xiuzanuserParams = '{"funcKey":"getUserThird","client_id":"XZ100001", "nonce":"123"}';
+
+			var opParams = '{"url":"http://www.baidu.com"}';
+
+			var startParams = '{"funcKey":"startVolumeListener"}';
+
+			var stopParams = '{"funcKey":"stopVolumeListener"}';
+
+			var shareParams1 = '{"title":"标题", "link":"http://tv.cctv.com/epg/", "img":"http://p3.img.cctvpic.com/photoAlbum/templet/common/DEPA1367457523502574/cctv5_20160328.png", "content":"内容","platform":"1", "openType":"1"}';
+
+			var shareParams2 = '{"title":"标题", "link":"http://tv.cctv.com/epg/", "img":"http://p3.img.cctvpic.com/photoAlbum/templet/common/DEPA1367457523502574/cctv5_20160328.png", "content":"内容","platform":"1", "openType":"2"}';
+
+			var shareParams3 = '{"title":"", "link":"http://tv.cctv.com/epg/", "img":"http://n.sinaimg.cn/sports/2_img/upload/4bc9295c/w948h676/20171214/C9UR-fypsqiz8599045.jpg", "content":"","platform":"1", "openType":"2", "shareType":"2"}';
+
+
+			var shareParams4 = '{"title":"标题", "link":"http://tv.cctv.com/epg/", "img":"http://p3.img.cctvpic.com/photoshareParams3lbum/templet/common/DEPA1367457523502574/cctv5_20160328.png", "content":"内容"}';
+
+			var shareParamsUGC = '{"topicId":"话题ID","classId":"分类ID","topicName":"厉害了我的国"}';
+
+			var jumppage = '{"link":"navigate://CCTV12,2","title":"服务"}';
+	
+			var certificateParams = '{"pageid":"Page1516358582731262", "totalPoints":"99999", "score":"99", "headcount":"999999","ranking":"9"}';
+
+			var linkParams = '{"id":"id", "link":"http://tv.cctv.com/epg/","title":"标题"}';
+
+			var showOrHiddenGoHomePatams = '{"isShow":"1"}';
+
+			var getEncryptionKeyParams = '{"methodname":"methodname","funcKey":"getEncryptionKey"}';
+
+			var setRefreshEnabledParams = '{"isRefreshEnabled":"1"}';
+
+			var getAppinfoParams = '{"funcKey":"getAppinfo"}';
+
+			var setShareParams = '{"title":"标题","link":"http://tv.cctv.com/epg/","img":"http://p3.img.cctvpic.com/photoAlbum/templet/common/DEPA1367457523502574/cctv5_20160328.png","content":"内容"}';
+
+		    var goAddressParams = '{"userId":"000001"}';
+
+		    var startAudioRecognitionParams =  '{"funcKey":"startAudioRecognition"}';
+
+
+
+		function getUser(data){
+			if (data == undefined || data == null)
+			{
+				return window.jsext.goLogin();
+			}
+			if(isAndroid) {
+			    document.getElementById("returnValue").value = data;
+			    alert(data.userId);
+			} else if(isIos) {
+			    var jsonObj = eval('('+data+')');
+			    document.getElementById("returnValue").value = jsonObj;
+			}
+			<!--var jsonObj = eval(data);-->
+			<!---->
+			<!--alert(data.userId);-->
+			<!--var addressParams = '{"userId":"'+data.userId+'"}';-->
+			<!--alert('address:'+addressParams);-->
+			<!--//window.jsext.goAddress(addressParams);-->
+		}
+
+		function getUserThird(data){
+			if (data == undefined || data == null)
+			{
+				return window.jsext.goLogin();
+			}
+			if(isAndroid) {
+			   alert(data)
+			   document.getElementById("returnValue").value = "秀赞回调结果："+data;
+			} else if(isIos) {
+			   var jsonObj = eval('('+data+')');
+			   alert(jsonObj);
+			   document.getElementById("returnValue").value = "秀赞回调结果："+jsonObj;
+			}
+
+		}
+
+		var adressParams = '{"funcKey":"getAdress"}';
+		var appinfoParams = '{"funcKey":"getAppinfo"}';
+
+		function getAppinfo(data){
+		        if(isAndroid) {
+		           document.getElementById("returnValue").value = "回调结果："+"版本号："+data.info;
+		        } else if (isIos) {
+		           var jsonObj = eval('('+data+')');
+		           document.getElementById("returnValue").value = "回调结果："+"版本号："+jsonObj.info;
+		        }
+			}
+
+	    function startAudioRecognition (data) {
+	            if(isAndroid) {
+	               document.getElementById("returnValue").value = "回调结果："+"id:"+data.id;
+	               alert(data.id)
+	            } else if (isIos) {
+	               var jsonObj = eval('('+data+')');
+	               document.getElementById("returnValue").value = "回调结果："+"id:"+jsonObj.id;
+	               alert(jsonObj.id)
+	            }
+
+
+	    }
+
+
+        function H5getUser() {
+                //var userParams = '{"funcKey":"getUser"}';
+                if(isAndroid) {
+                   window.jsext.getUser(userParams);  //Android方法
+                } else if(isIos) {
+                 window.webkit.messageHandlers.getUser.postMessage(userParams);//ios方法
+                }
+            }
+        function H5goLogin() {
+               if(isAndroid) {
+                  window.jsext.goLogin();
+               } else if(isIos) {
+                  window.webkit.messageHandlers.goLogin.postMessage('');
+               }
+            }
+        function H5backToApp() {
+               if(isAndroid) {
+                  javascript:window.jsext.backToApp();
+               } else if(isIos) {
+                  window.webkit.messageHandlers.backToApp.postMessage('');
+               }
+            }
+        function H5openPage() {
+               if(isAndroid) {
+                  window.jsext.openPage(opParams);
+               } else if(isIos) {
+                  window.webkit.messageHandlers.openPage.postMessage('');
+               }
+            }
+        function H5share1() {
+               if(isAndroid) {
+                   window.jsext.share(shareParams1);
+               } else if(isIos) {
+                   window.webkit.messageHandlers.share.postMessage(shareParams1);
+               }
+            }
+        function H5share2() {
+               if(isAndroid) {
+                   window.jsext.share(shareParams2);
+               } else if (isIos) {
+                   window.webkit.messageHandlers.share.postMessage(shareParams2);
+               }
+            }
+        function H5share3() {
+               if(isAndroid) {
+                 window.jsext.share(shareParams3);
+               } else if(isIos){
+                 window.webkit.messageHandlers.share.postMessage(shareParams3);
+               }
+            }
+        function H5openPageWithLink() {
+               if(isAndroid) {
+                  window.jsext.openPageWithLink(linkParams);
+               } else if (isIos) {
+                  window.webkit.messageHandlers.openPageWithLink.postMessage(linkParams);
+               }
+            }
+        function H5showOrHiddenGoHomeBtn() {
+               if(isAndroid) {
+                 window.jsext.showOrHiddenGoHomeBtn(showOrHiddenGoHomePatams);
+               } else if (isIos) {
+                 window.webkit.messageHandlers.showOrHiddenGoHomeBtn.postMessage(showOrHiddenGoHomePatams);
+               }
+            }
+        function H5getEncryptionKey() {
+               if(isAndroid) {
+                  window.jsext.getEncryptionKey(getEncryptionKeyParams);
+               } else if (isIos) {
+                  window.webkit.messageHandlers.getEncryptionKey.postMessage(getEncryptionKeyParams);
+               }
+            }
+        function H5setRefreshEnabled() {
+                if(isAndroid) {
+                   window.jsext.setRefreshEnabled(setRefreshEnabledParams);
+                } else if (isIos) {
+                   window.webkit.messageHandlers.setRefreshEnabled.postMessage(setRefreshEnabledParams);
+                }
+            }
+        function H5getUserThird() {
+                if(isAndroid) {
+                   window.jsext.getUserThird(xiuzanuserParams);
+                } else if (isIos) {
+                   window.webkit.messageHandlers. getUserThird.postMessage(xiuzanuserParams);
+                }
+            }
+        function H5disPatchTouchViewPager() {
+                 window.jsext.disPatchTouchViewPager(true);
+            }
+        function H5getAppinfo() {
+                 if(isAndroid) {
+                    window.jsext.getAppinfo (getAppinfoParams);
+                 } else if (isIos) {
+                    window.webkit.messageHandlers.getAppinfo.postMessage(getAppinfoParams);
+                 }
+            }
+        function H5setShare() {
+                 if(isAndroid) {
+                    window.jsext.setShare(shareParams4);
+                 } else if (isIos) {
+                    window.webkit.messageHandlers.setShare.postMessage(shareParams4);
+                 }
+            }
+        function H5goAddress(){
+                if(isAndroid) {
+                   window.jsext.goAddress(goAddressParams);
+                } else if(isIos){
+                   window.webkit.messageHandlers.goAddress.postMessage(goAddressParams);
+                }
+            }
+        function H5goRegister(){
+                if(isAndroid) {
+                   window.jsext.goRegister();
+                } else if(isIos) {
+                   window.webkit.messageHandlers.goRegister.postMessage('');
+                }
+            }
+        function H5startAudioRecognition() {
+                if(isAndroid) {
+                   window.jsext.startAudioRecognition(startAudioRecognitionParams);
+                } else if (isIos){
+                   window.webkit.messageHandlers.startAudioRecognition.postMessage(startAudioRecognitionParams);
+                }
+            }
+        function H5stopAudioRecognition(){
+                if(isAndroid) {
+                   window.jsext.stopAudioRecognition();
+                } else if (isIos) {
+                   window.webkit.messageHandlers.stopAudioRecognition.postMessage('');
+                }
+            }
+
+        function H5goUGC() {
+                if(isAndroid) {
+                   window.jsext.goUGC(shareParamsUGC);
+                } else if(isIos) {
+                   window.webkit.messageHandlers.goUGC.postMessage(shareParamsUGC);
+                }
+            }
+
+	</script>
+	</head>
+
+	<body onload="JudgeDevices()">
+		<h1>
+			<button onclick="H5getUser()">获取用户信息</button>
+			<button onclick="H5goLogin()">跳转登录界面</button>
+		</h1>
+		<h1>
+			<button onclick="H5backToApp()">退出H5页面</button>
+			<button onclick="H5openPage()">打开新页面</button>
+		</h1>
+		<h1>
+			<button onclick="H5getAppinfo()">获取设备信息</button>
+			<button onclick="H5getUserThird()">秀赞获取用户信息</button>
+		</h1>
+		<h1>
+			<button onclick="H5startAudioRecognition()">音频识别开始</button>
+			<button onclick="H5stopAudioRecognition()">音频识别停止</button>
+		</h1>
+		<h1>
+			<button onclick="H5openPageWithLink()">根据link跳转页面</button>
+			<button onclick="H5showOrHiddenGoHomeBtn()">显示或隐藏返回按钮</button>
+		</h1>
+		<h1>
+			<button onclick="H5getEncryptionKey()">获取加密串方法</button>
+			<button onclick="H5setRefreshEnabled()">是否支持下拉刷新</button>
+		</h1>
+		<h1>
+			<button onclick="H5disPatchTouchViewPager()">是否拦截滑动事件</button>
+			<button onclick="H5setShare()">设置分享信息(由APP调起分享)</button>
+		</h1>
+		<h1>
+			<button onclick="H5share1()">分享自定义</button>
+			<button onclick="H5share2()">分享原生-标题链接</button>
+			<button onclick="H5share3()">分享原生-分享图片</button>
+		</h1>
+		<h3>CCTV5 单独方法</h3>
+		<h2>
+			<button onclick="H5goAddress()">跳转收货地址界</button>
+			<button onclick="H5goRegister()">跳转注册界面</button>
+			<button onclick="H5startAudioRecognition()">音频识别开始</button>
+			<button onclick="H5stopAudioRecognition()">音频识别停止</button>
+		</h2>
+		<h3>CCTV少儿、品牌 单独方法</h3>
+		<h2>
+			<button onclick="H5startAudioRecognition()">音频识别开始</button>
+			<button onclick="H5stopAudioRecognition()">音频识别停止</button>
+			<button onclick="H5goUGC()">UGC</button>
+		</h2>
+		<h3>CCTV音乐 单独方法</h3>
+        <h2>
+			<button onclick="H5goUGC()">UGC</button>
+		</h2>
+
+
+
+		<h1>显示结果回调</h1>
+	    <textarea id ="returnValue" type="value" rows="10" cols="40"></textarea>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+            <script language="javascript">
+
+            var userId = '{"funcKey":"getIdentity","userId":"00313403"}'
+                        
+            var userParams = '{"funcKey":"getUser"}';
+            
+            var opParams = '{"url":"http://www.baidu.com"}';
+            
+            var startParams = '{"funcKey":"startVolumeListener"}';
+            
+            var stopParams = '{"funcKey":"stopVolumeListener"}';
+            
+            var shareParams1 = '{"title":"标题", "link":"http://tv.cctv.com/epg/", "img":"http://p3.img.cctvpic.com/photoAlbum/templet/common/DEPA1367457523502574/cctv5_20160328.png", "content":"内容","platform":"1", "openType":"1"}';
+            
+            var shareParams2 = '{"title":"标题", "link":"http://tv.cctv.com/epg/", "img":"http://p3.img.cctvpic.com/photoAlbum/templet/common/DEPA1367457523502574/cctv5_20160328.png", "content":"内容","platform":"1", "openType":"2"}';
+            
+            var shareParams3 = '{"title":"", "link":"http://tv.cctv.com/epg/", "img":"http://n.sinaimg.cn/sports/2_img/upload/4bc9295c/w948h676/20171214/C9UR-fypsqiz8599045.jpg", "content":"","platform":"1", "openType":"2", "shareType":"2"}';
+            
+            
+            var shareParamsUGC = '{"topicId":"话题ID","classId":"分类ID","topicName":"厉害了我的国"}';
+            
+            var jumppageParams = '{"link":"navigate://CCTV12,2","title":"服务"}';
+            
+            var certificateParams = '{"pageid":"Page1516358582731262", "totalPoints":"99999", "score":"99", "headcount":"999999","ranking":"9"}';
+            
+            var adressParams = '{"funcKey":"getAdress"}';
+            var appinfoParams = '{"funcKey":"getAppinfo"}';
+            
+            var startAudioParams = '{"funcKey":"identifySucess","failkey":"identifyFail","countDown":"8000","accuracy":"1"}';
+            
+            var showOrHiddenGoHomePatams = '{"isShow":"1"}';
+            
+            var openPageWithLinkPatams = '{ "id":"id","link":"link","title":"标题" }';
+            
+            var setRefreshEnabledPatams = '{"isRefreshEnabled":"true"}';
+
+
+            function getIdentity(result) {
+            	if (result) {
+            		document.getElementById("returnValue").value = result;
+            	}else
+            	window.webkit.messageHandlers.getIdentity.postMessage(userId);
+            }
+            
+            function getUser(result) {
+             
+                if (result )
+                {
+                 document.getElementById("returnValue").value = result;
+                }else
+                
+                window.webkit.messageHandlers.getUser.postMessage(userParams);
+                
+                
+            }
+                
+            function goLogin() {
+                window.webkit.messageHandlers.goLogin.postMessage('');
+            }
+            
+            function share() {
+                
+                window.webkit.messageHandlers.share.postMessage(shareParams1);
+            }
+            
+            function share1() {
+                window.webkit.messageHandlers.share.postMessage(shareParams2);
+            }
+            function share2() {
+
+                window.webkit.messageHandlers.share.postMessage(shareParams3);
+            }
+            
+            function goRegister() {
+                window.webkit.messageHandlers.goRegister.postMessage('');
+            }
+            
+            function goUGC(result) {
+    
+                window.webkit.messageHandlers.goUGC.postMessage(shareParamsUGC);
+            }
+            
+            function getAdress(result) {
+                
+                document.getElementById("returnValue").value = result;
+            }
+            function getAdressJS(result) {
+             
+                return window.webkit.messageHandlers.getAdress.postMessage(adressParams);
+                
+            }
+            
+            function getAppinfo(result) {
+                
+                if (result == undefined || result == null)
+                {
+                    return window.webkit.messageHandlers.getAppinfo.postMessage(appinfoParams);
+                }
+                
+                document.getElementById("returnValue").value = result;
+            }
+            function getCertificateData(){
+                
+                window.webkit.messageHandlers.getCertificateData.postMessage(certificateParams);
+            }
+            
+            function jumpPage(){
+                
+                window.webkit.messageHandlers.jumpPage.postMessage(jumppageParams);
+            }
+            
+            function startAudioRecognition(){
+                
+                window.webkit.messageHandlers.startAudioRecognition.postMessage(startAudioParams);
+            }
+            function stopAudioRecognition(){
+                
+                window.webkit.messageHandlers.stopAudioRecognition.postMessage('');
+            }
+            function reOpenUrl(){
+                
+                window.webkit.messageHandlers.reOpenUrl.postMessage('');
+            }
+            function openPage(){
+                
+                window.webkit.messageHandlers.openPage.postMessage('');
+            }
+            function goBack(){
+                
+                window.webkit.messageHandlers.backToApp.postMessage('');
+            }
+            function showOrHiddenGoHomeBtn(){
+                
+                window.webkit.messageHandlers.showOrHiddenGoHomeBtn.postMessage(showOrHiddenGoHomePatams);
+            }
+            
+            function openPageWithLink(){
+                
+                window.webkit.messageHandlers.openPageWithLink.postMessage(openPageWithLinkPatams);
+            }
+            
+            function setRefreshEnabled(){
+                
+                window.webkit.messageHandlers.setRefreshEnabled.postMessage(openPageWithLinkPatams);
+            }
+
+
+            </script>
+            </head>
+    
+    <body>
+        <h1>这只是个例子，可根据具体需求自行处理</h1>
+        <h1>
+            <input type="button" value="获取id" onclick="getIdentity()" />
+        </h1>
+        <h1>
+            <input type="button" value="返回上一页" onclick="goBack()" />
+            <input type="button" value="显示或隐藏返回按钮" onclick="showOrHiddenGoHomeBtn">
+        </h1>
+        <h1>
+        <input type="button" value="获取用户信息" onclick="getUser()" />
+        <input type="button" value="登录" onclick="goLogin()" />
+        </h1>
+        <h1>
+        <input type="button" value="证书合成" onclick="getCertificateData()" />
+        <input type="button" value="获取定位信息" onclick="getAdressJS()" />
+        </h1>
+        <h1>
+        <input type="button" value="获取版本号" onclick="getAppinfo()" />
+        <input type="button" value="打开页面" onclick="openPage()" />
+        </h1>
+        <h1>
+        <input type="button" value="从新加载" onclick="reOpenUrl()" />
+        <input type="button" value="社法服务模块" onclick="jumpPage()" />
+        <input type="button" value="打开底层页" onclick="openPageWithLink()" />
+        </h1>
+        
+        <h1>
+            <input type="button" value="开始识别" onclick="startAudioRecognition()" />
+            <input type="button" value="结束识别" onclick="stopAudioRecognition()" />
+            <input type="button" value="设置是否刷新" onclick="setRefreshEnabled()" />
+        </h1>
+
+        <h1>
+            <input type="button" value="分享自定义" onclick="share()" />
+            <input type="button" value="分享原生--链接标题" onclick="share1()" />
+            <input type="button" value="分享原生--图片" onclick="share2()" />
+        </h1>
+        
+        <h1>
+            <input type="button" value="跳转注册页" onclick="goRegister" />
+            <input type="button" value="UGC" onclick="goUGC()" />
+        </h1>
+        
+        <h1>这是文件上传</h1>
+
+        <input type="file" />
+        
+        <h1>这是回调结果展示区</h1>
+        <textarea id ="returnValue" type="value" rows="5" cols="40">
+        
+        </textarea>
+        
+    </body>
+</html>
